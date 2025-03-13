@@ -119,14 +119,14 @@ def send_email_notification(email, subreddit, active_users, status):
 
     msg = MIMEText(body)
     msg["Subject"] = subject
-    msg["From"] = EMAIL_SENDER
+    msg["From"] = os.getenv("EMAIL_FROM")
     msg["To"] = email
 
     try:
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.starttls()
-        server.login(EMAIL_SENDER, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_SENDER, email, msg.as_string())
+        server.login(os.getenv("EMAIL_USERNAME"), os.getenv("EMAIL_PASSWORD"))
+        server.sendmail(os.getenv("EMAIL_FROM"), email, msg.as_string())
         server.quit()
         print(f"📧 Email sent to {email} for r/{subreddit} ({active_users} users) - {status_text}")
     except Exception as e:
