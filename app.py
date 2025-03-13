@@ -31,11 +31,13 @@ EMAIL_SENDER = os.getenv("EMAIL_SENDER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 SMTP_SERVER = os.getenv("SMTP_SERVER")
 SMTP_PORT = int(os.getenv("SMTP_PORT"))
+ADMIN_PASS = os.getenv("ADMIN_PASS")
+CLIENT_PASS = os.getenv("CLIENT_PASS")
 
 # Allowed Users (Set YOUR username & password here)
 AUTHORIZED_USERS = {
-    "admin": "your_password_here",  
-    "client": "client_password_here"  
+    "admin": ADMIN_PASS,  
+    "client": CLIENT_PASS  
 }
 
 def verify_user(credentials: HTTPBasicCredentials = Depends(security)):
