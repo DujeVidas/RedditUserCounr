@@ -110,28 +110,29 @@ def send_notification(method, target, subreddit, active_users, status):
         send_discord_notification(target, subreddit, active_users, status)
 
 def send_email_notification(email, subreddit, active_users, status):
-    """Send email alerts"""
+    """Send email using MailerSend API"""
     status_text = "🔺 Above" if status == "above" else "🔻 Below"
     subject = f"{status_text} Threshold Alert: {subreddit} has {active_users} users!"
-    
-    body = f"Hello,\n\nr/{subreddit} now has {active_users} active users.\n\n"
-    body += f"Check it out: https://www.reddit.com/r/{subreddit}/\n\nBest,\nReddit Tracker"
 
-    msg = MIMEText(body)
-    msg["Subject"] = subject
-    msg["From"] = os.getenv("EMAIL_FROM")
-    msg["To"] = email
+    headers = {
+        "Authorization": f"Bearer {os.getenv('MAILERSEND_API_KEY')}",
+        "Content-Type": "application/json"
+    }
 
-    try:
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.set_debuglevel(1)  # Enable debugging
-        server.starttls()
-        server.login(os.getenv("EMAIL_USERNAME"), os.getenv("EMAIL_PASSWORD"))
-        server.sendmail(os.getenv("EMAIL_FROM"), email, msg.as_string())
-        server.quit()
-        print(f"📧 Email sent to {email} for r/{subreddit} ({active_users} users) - {status_text}")
-    except Exception as e:
-        print(f"❌ Failed to send email: {e}")
+    email_body = {
+        "from": {"email": os.getenv("EMAIL_FROM"), "name": "Reddit Tracker"},
+        "to": [{"email": email}],
+        "subject": subject,
+        "text": f"Hello,\n\nr/{subreddit} now has {active_users} active users.\n\n"
+                f"Check it out: https://www.reddit.com/r/{subreddit}/\n\nBest,\nReddit Tracker"
+    }
+
+    response = requests.post("https://api.mailersend.com/v1/email", json=email_body, headers=headers)
+
+    if response.status_code == 202:
+        print(f"📧 MailerSend Email sent to {email} for r/{subreddit} ({active_users} users) - {status_text}")
+    else:
+        print(f"❌ Failed to send MailerSend email: {response.text}")
 
 def send_discord_notification(webhook_url, subreddit, active_users, status):
     """Send a Discord notification"""
