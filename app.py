@@ -124,6 +124,7 @@ def send_email_notification(email, subreddit, active_users, status):
 
     try:
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.set_debuglevel(1)  # Enable debugging
         server.starttls()
         server.login(os.getenv("EMAIL_USERNAME"), os.getenv("EMAIL_PASSWORD"))
         server.sendmail(os.getenv("EMAIL_FROM"), email, msg.as_string())
