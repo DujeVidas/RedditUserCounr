@@ -1,7 +1,6 @@
 fastapi
 uvicorn
 praw
-sqlite3
 requests
 python-dotenv
 Jinja2
