@@ -22,9 +22,19 @@
             <input type="text" name="notification_target" required class="p-2 w-full rounded bg-gray-700 text-white"
                 value="{{ global_settings[2] if global_settings else '' }}">
 
-            <label class="block mt-3 mb-2">Backup Notification Target (Discord Webhook):</label>
-                <input type="text" name="backup_notification_target" required class="p-2 w-full rounded bg-gray-700 text-white"
-                    value="{{ global_settings[3] if global_settings else '' }}">
+            <label class="block mt-3 mb-2">
+                Backup Notification Target (Discord Webhook):
+                <a href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks" 
+                    target="_blank" 
+                    class="ml-2 text-blue-400 hover:underline relative group">
+                    ❓
+                    <span class="absolute left-0 bottom-full mb-2 w-48 bg-gray-800 text-white text-sm p-2 rounded shadow-lg hidden group-hover:block">
+                        How to make a webhook
+                    </span>
+                </a>
+            </label>
+            <input type="text" name="backup_notification_target" required class="p-2 w-full rounded bg-gray-700 text-white"
+                value="{{ global_settings[3] if global_settings else '' }}">
 
             <button type="submit" class="mt-4 bg-blue-500 p-2 rounded w-full">Update Settings</button>
         </form>
