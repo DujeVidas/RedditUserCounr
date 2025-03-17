@@ -98,6 +98,16 @@ def get_global_settings():
     conn.close()
     return settings
 
+async def keep_alive():
+    """Self-ping every 10 minutes to prevent shutdown"""
+    while True:
+        try:
+            requests.get("https://redditusercount.onrender.com")
+            print("✅ Self-Ping Sent")
+        except Exception as e:
+            print(f"⚠️ Keep-alive failed: {e}")
+        await asyncio.sleep(600)  # Wait 10 minutes
+
 state_cache = {}
 
 async def check_subreddits():
@@ -277,3 +287,4 @@ async def remove_subreddit(name: str = Form(...), user: str = Depends(verify_use
 async def startup_event():
     """Starts the background task when the API starts"""
     asyncio.create_task(check_subreddits())
+    asyncio.create_task(keep_alive())
