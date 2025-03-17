@@ -102,7 +102,7 @@ async def keep_alive():
     """Self-ping every 5 minutes to prevent shutdown"""
     while True:
         try:
-            response = requests.get("https://your-app.onrender.com/ping")
+            response = requests.get("https://redditusercount.onrender.com/ping")
             if response.status_code == 200:
                 print("✅ Self-Ping Successful")
             else:
