@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status, Form, Request
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 import sqlite3
 import praw
 import os
@@ -18,6 +19,7 @@ load_dotenv()
 app = FastAPI()
 security = HTTPBasic()
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Reddit API Configuration
 reddit = praw.Reddit(

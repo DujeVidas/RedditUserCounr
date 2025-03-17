@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Reddit Tracker Works</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-6">
+    
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-4">📖 How Reddit Tracker Works</h1>
+
+        <p class="mb-4">Reddit Tracker is a simple tool that allows users to monitor subreddit activity and receive notifications when the number of active users crosses a threshold.</p>
+
+        <h2 class="text-xl font-semibold mb-2">Step 1: Add Subreddits</h2>
+        <p class="mb-4">You can add any subreddit you want to track. Simply enter the subreddit name and submit it. The tracker will monitor the number of active users.</p>
+
+        <h2 class="text-xl font-semibold mb-2">Step 2: Configure Global Settings</h2>
+        <p class="mb-4">Set up the global notification settings, including:</p>
+        <ul class="list-disc list-inside mb-4">
+            <li>🔹 <b>Threshold</b>: Define the minimum number of active users that triggers a notification <b>REQUIRED</b>.</li>
+            <li>📧 <b>Notification Target</b>: Set an email address to receive alerts. <b>REQUIRED</b></li>
+            <li>💬 <b>Backup Notification (Discord Webhook)</b>: Enter a Discord webhook for backup notifications. <b>REQUIRED</b></li>
+            <li>✅ <b>Enable/Disable Tracking</b>: Toggle tracking on or off.</li>
+        </ul>
+        <p class="mb-4">When you press <b>Update Settings</b> the enable tracking checkbox will automatically check.</p>
+        <br>
+        <p class="mb-4">After this initial process you can now add/remove subreddits freely</p>
+        <h2 class="text-xl font-semibold mb-2">Step 3: Receive Notifications</h2>
+        <p class="mb-4">Whenever a tracked subreddit crosses the threshold, a notification is sent to the configured email or Discord webhook.</p>
+
+        <h2 class="text-xl font-semibold mb-2">Step 4: Manage Tracked Subreddits</h2>
+        <p class="mb-4">You can remove a subreddit from tracking at any time using the "Remove" button.</p>
+
+        <h2 class="text-xl font-semibold mb-2">Need Help?</h2>
+        <p>Check the <a href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks" target="_blank" class="text-blue-400 hover:underline">Discord Webhook Guide</a> if you need help setting up Discord notifications.</p>
+    </div>
+
+</body>
+</html>
