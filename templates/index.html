@@ -11,33 +11,46 @@
     <div class="max-w-xl mx-auto">
         <h1 class="text-3xl font-bold mb-4">🔍 Reddit User Tracker</h1>
 
-        <h2 class="text-xl font-semibold mb-2">➕ Add a Subreddit</h2>
+        <!-- Global Settings -->
+        <h2 class="text-xl font-semibold mb-2">⚙️ Global Notification Settings</h2>
+        <form method="post" action="/update_settings/" class="bg-gray-800 p-4 rounded">
+            <label class="block mb-2">Threshold:</label>
+            <input type="number" name="threshold" required class="p-2 w-full rounded bg-gray-700 text-white"
+                value="{{ global_settings[0] if global_settings else '' }}">
+            
+            <label class="block mt-3 mb-2">Notification Target (Email):</label>
+            <input type="text" name="notification_target" required class="p-2 w-full rounded bg-gray-700 text-white"
+                value="{{ global_settings[2] if global_settings else '' }}">
+
+            <label class="block mt-3 mb-2">Backup Notification Target (Discord Webhook):</label>
+                <input type="text" name="backup_notification_target" required class="p-2 w-full rounded bg-gray-700 text-white"
+                    value="{{ global_settings[3] if global_settings else '' }}">
+
+            <button type="submit" class="mt-4 bg-blue-500 p-2 rounded w-full">Update Settings</button>
+        </form>
+
+        <form method="post" action="/toggle_tracking/" class="bg-gray-800 p-4 rounded">
+            <label class="block mb-2">Enable Tracking:</label>
+            <input type="checkbox" {% if global_settings and global_settings[4] == 1 %}checked{% endif %} 
+                   onclick="this.form.submit()">
+        </form>
+
+        <!-- Add a Subreddit -->
+        <h2 class="text-xl font-semibold mt-6 mb-2">➕ Add a Subreddit</h2>
         <form method="post" action="/add_subreddit/" class="bg-gray-800 p-4 rounded">
             <label class="block mb-2">Subreddit Name:</label>
             <input type="text" name="name" required class="p-2 w-full rounded bg-gray-700 text-white">
-            
-            <label class="block mt-3 mb-2">Threshold:</label>
-            <input type="number" name="threshold" required class="p-2 w-full rounded bg-gray-700 text-white">
-
-            <label class="block mt-3 mb-2">Notification Method:</label>
-            <select name="notification_method" class="p-2 w-full rounded bg-gray-700 text-white">
-                <option value="email">Email</option>
-                <option value="discord">Discord</option>
-            </select>
-
-            <label class="block mt-3 mb-2">Notification Target (Email or Webhook):</label>
-            <input type="text" name="notification_target" required class="p-2 w-full rounded bg-gray-700 text-white">
 
             <button type="submit" class="mt-4 bg-blue-500 p-2 rounded w-full">Add Subreddit</button>
         </form>
 
+        <!-- List of Tracked Subreddits -->
         <h2 class="text-xl font-semibold mt-6 mb-2">📋 Tracked Subreddits</h2>
         <div class="bg-gray-800 p-4 rounded">
             {% for subreddit in subreddits %}
                 <div class="p-2 bg-gray-700 rounded flex justify-between items-center mb-2">
                     <div>
-                        <strong>r/{{ subreddit[0] }}</strong>  
-                        (Threshold: {{ subreddit[1] }}) - {{ subreddit[2] }}
+                        <strong>r/{{ subreddit[0] }}</strong>
                     </div>
                     <form method="post" action="/remove_subreddit/">
                         <input type="hidden" name="name" value="{{ subreddit[0] }}">
