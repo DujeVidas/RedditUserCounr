@@ -99,14 +99,17 @@ def get_global_settings():
     return settings
 
 async def keep_alive():
-    """Self-ping every 10 minutes to prevent shutdown"""
+    """Self-ping every 5 minutes to prevent shutdown"""
     while True:
         try:
-            requests.get("https://redditusercount.onrender.com")
-            print("✅ Self-Ping Sent")
+            response = requests.get("https://your-app.onrender.com/ping")
+            if response.status_code == 200:
+                print("✅ Self-Ping Successful")
+            else:
+                print(f"⚠️ Self-Ping returned status {response.status_code}")
         except Exception as e:
             print(f"⚠️ Keep-alive failed: {e}")
-        await asyncio.sleep(600)  # Wait 10 minutes
+        await asyncio.sleep(300)  # Ping every 5 minutes
 
 state_cache = {}
 
@@ -288,3 +291,7 @@ async def startup_event():
     """Starts the background task when the API starts"""
     asyncio.create_task(check_subreddits())
     asyncio.create_task(keep_alive())
+
+@app.get("/ping")
+async def ping():
+    return {"status": "alive"}
