@@ -290,7 +290,7 @@ async def remove_subreddit(name: str = Form(...), user: str = Depends(verify_use
 async def startup_event():
     """Starts the background task when the API starts"""
     asyncio.create_task(check_subreddits())
-    asyncio.create_task(keep_alive())
+    #asyncio.create_task(keep_alive())
 
 @app.get("/ping")
 async def ping():
