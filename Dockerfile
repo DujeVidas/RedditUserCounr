@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the application files
 COPY . /app
 
+# Set up a persistent volume for SQLite database
+VOLUME /data
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 

@@ -56,7 +56,8 @@ def verify_user(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials.username  
 
 # Database Setup
-DB_FILE = "subreddits.db"
+DB_FILE = "/data/subreddits.db"
+os.makedirs("/data", exist_ok=True)
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
